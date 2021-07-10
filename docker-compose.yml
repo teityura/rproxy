@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+  rproxy:
+    build: ./
+    image: rproxy:1.19.2-alpine
+    restart: always
+    volumes:
+      - ./etc/letsencrypt:/etc/letsencrypt
+      - ./etc/crontabs/root:/etc/crontabs/root
+      - ./etc/nginx/conf.d/teityura.com.conf:/etc/nginx/conf.d/teityura.com.conf
+    network_mode: host

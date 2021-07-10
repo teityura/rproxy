@@ -1,0 +1,8 @@
+00 05 * * 1 certbot certonly \
+  --standalone \
+  --agree-tos \
+  --non-interactive \
+  --force-renew \
+  -d teityura.com \
+  --register-unsafely-without-email && \
+  /usr/sbin/nginx -s reload
