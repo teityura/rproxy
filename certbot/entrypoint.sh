@@ -11,12 +11,12 @@ CERTFILE='/etc/letsencrypt/live/teityura.com/fullchain.pem'
 if [ ! -e "$CERTFILE" ]; then
   certbot certonly \
     --standalone \
-    --agree-tos \
-    --non-interactive \
-    --keep \
     -d teityura.com \
     -d gitlab.teityura.com \
-    --register-unsafely-without-email
+    -m teityura@gmail.com \
+    --keep \
+    --agree-tos \
+    --non-interactive
 fi
 
 exec "$@"

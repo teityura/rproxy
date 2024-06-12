@@ -3,8 +3,8 @@
   -w /var/www/webroot \
   -d teityura.com \
   -d gitlab.teityura.com \
+  -m teityura@gmail.com \
   --force-renew \
   --agree-tos \
-  --non-interactive \
-  --register-unsafely-without-email && \
+  --non-interactive && \
   /usr/sbin/nginx -s reload
