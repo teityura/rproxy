@@ -1,30 +1,41 @@
 # Reverse Proxy on Docker
 
-## git clone
+## add subdomain
 
 ```
-mkdir -p ~/containers/
-cd ~/containers/
-git clone https://github.com/teityura/rproxy.git
-cd rproxy/
+cp nginx/conf.d/teityura.com.conf nginx/conf.d/xxx.teityura.com.conf
+vim nginx/conf.d/xxx.teityura.com.conf
 ```
 
-## ドメインを変更する場合
+## check certonly
 
 ```
-find . -type f -not -path "./.git/*" -exec sed -i "s/teityura.com/hoge.com/g" '{}' \;
-mv etc/letsencrypt/live/teityura.com etc/letsencrypt/live/hoge.com
-mv etc/nginx/conf.d/teityura.com.conf etc/nginx/conf.d/hoge.com.conf
+docker run --rm \
+  -p 80:80 \
+  -p 443:443 \
+  -v $(pwd)/certbot/letsencrypt:/etc/letsencrypt \
+  -v $(pwd)/certbot/letsencrypt:/var/lib/letsencrypt \
+certbot/certbot \
+  certonly \
+  -d teityura.com \
+  -d gitlab.teityura.com \
+  -d xxx.teityura.com \
+  -m teityura@gmail.com \
+  --agree-tos \
+  --standalone \
+  --dry-run
+
+openssl x509 -noout -text -in 'certbot/letsencrypt/live/teityura.com/fullchain.pem' | grep DNS
+openssl x509 -noout -text -in 'certbot/letsencrypt/live/teityura.com/fullchain.pem' -dates
 ```
 
-## サブドメインを追加する場合
-
-```
-サブドメインを追加したときに、追記予定
-```
-
-## docker-compose up -d
+## deploy
 
 ```
 docker-compose up -d
+docker-compose ps
+docker-compose logs -f
+
+openssl s_client -host localhost -port 443 -servername teityura.com
+openssl s_client -host localhost -port 443 -servername teityura.com | openssl x509 -noout -dates
 ```
