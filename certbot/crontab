@@ -1,7 +1,8 @@
-00 05 * * 1 certbot certonly \
+50 23 * * 1 certbot certonly \
   --webroot \
-  -w /var/www/html \
+  -w /var/www/webroot \
   -d teityura.com \
+  -d gitlab.teityura.com \
   --force-renew \
   --agree-tos \
   --non-interactive \

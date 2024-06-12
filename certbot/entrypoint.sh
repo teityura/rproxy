@@ -15,14 +15,8 @@ if [ ! -e "$CERTFILE" ]; then
     --non-interactive \
     --keep \
     -d teityura.com \
+    -d gitlab.teityura.com \
     --register-unsafely-without-email
 fi
-
-#===============================================================================
-# ACMEを受けるディレクトリを作成
-#===============================================================================
-
-mkdir -p /var/www/html
-chown nginx. /var/www/html
 
 exec "$@"

@@ -2,11 +2,28 @@ version: "3"
 
 services:
   rproxy:
-    build: ./
-    image: rproxy:1.19.2-alpine
+    image: nginx:1.26.1-alpine
     restart: always
     volumes:
-      - ./etc/letsencrypt:/etc/letsencrypt
-      - ./etc/crontabs/root:/etc/crontabs/root
-      - ./etc/nginx/conf.d/teityura.com.conf:/etc/nginx/conf.d/teityura.com.conf
-    network_mode: host
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./nginx/crontab:/etc/crontabs/root:ro
+      - ./certbot/letsencrypt:/etc/letsencrypt:ro
+      - webroot:/var/www/webroot:ro
+    ports:
+      - 80:80
+      - 443:443
+    extra_hosts:
+      - host.docker.internal:host-gateway
+
+  certbot:
+    image: certbot/certbot:latest
+    entrypoint: ["/entrypoint.sh"]
+    command: ["crond", "-f"]
+    volumes:
+      - ./certbot/entrypoint.sh:/entrypoint.sh:ro
+      - ./certbot/crontab:/etc/crontabs/root:ro
+      - ./certbot/letsencrypt:/etc/letsencrypt:rw
+      - webroot:/var/www/webroot:rw
+
+volumes:
+  webroot:
