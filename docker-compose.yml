@@ -20,7 +20,7 @@ services:
   certbot:
     image: certbot/certbot:latest
     entrypoint: ["/entrypoint.sh"]
-    command: ["crond", "-f"]
+    command: ["crond", "-f", "-l", "1"]
     volumes:
       - ./certbot/entrypoint.sh:/entrypoint.sh:ro
       - ./certbot/crontab:/etc/crontabs/root:ro
