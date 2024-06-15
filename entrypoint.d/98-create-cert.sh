@@ -17,6 +17,7 @@ if [ ! -e "$CERTFILE" ]; then
     --keep \
     --agree-tos \
     --non-interactive
+    # --dry-run
 fi
 
-exec "$@"
+exit 0

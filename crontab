@@ -1,4 +1,4 @@
-50 23 * * 1 certbot certonly \
+05 00 * * 1 certbot certonly \
   --webroot \
   -w /var/www/webroot \
   -d teityura.com \
@@ -6,5 +6,5 @@
   -m teityura@gmail.com \
   --force-renew \
   --agree-tos \
-  --non-interactive && \
-  /usr/sbin/nginx -s reload
+  --non-interactive \
+  --post-hook /usr/sbin/nginx -s reload

@@ -2,30 +2,23 @@ version: "3"
 
 services:
   rproxy:
-    image: nginx:1.26.1-alpine
+    build: .
     restart: always
     volumes:
-      - ./nginx/conf.d:/etc/nginx/conf.d:ro
-      - ./nginx/crontab:/etc/crontabs/root:ro
-      - ./certbot/letsencrypt:/etc/letsencrypt:ro
-      - webroot:/var/www/webroot:ro
+      - ./entrypoint.d/98-create-cert.sh:/docker-entrypoint.d/98-create-cert.sh:ro
+      - ./entrypoint.d/99-start.crond.sh:/docker-entrypoint.d/99-start.crond.sh:ro
+      - ./conf.d:/etc/nginx/conf.d:ro
+      - ./crontab:/etc/crontabs/root:ro
+      - letsencrypt:/etc/letsencrypt:rw
+      - webroot:/var/www/webroot:rw
+      - log:/var/log:rw
     ports:
       - 80:80
       - 443:443
     extra_hosts:
       - host.docker.internal:host-gateway
-    depends_on:
-      - certbot
-
-  certbot:
-    image: certbot/certbot:latest
-    entrypoint: ["/entrypoint.sh"]
-    command: ["crond", "-f", "-l", "1"]
-    volumes:
-      - ./certbot/entrypoint.sh:/entrypoint.sh:ro
-      - ./certbot/crontab:/etc/crontabs/root:ro
-      - ./certbot/letsencrypt:/etc/letsencrypt:rw
-      - webroot:/var/www/webroot:rw
 
 volumes:
+  letsencrypt:
   webroot:
+  log:
