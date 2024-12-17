@@ -7,4 +7,4 @@
   --force-renew \
   --agree-tos \
   --non-interactive \
-  --post-hook /usr/sbin/nginx -s reload
+  --post-hook '/usr/sbin/nginx -s reload 2>&1'
