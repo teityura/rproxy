@@ -12,7 +12,7 @@ if [ ! -e "$CERTFILE" ]; then
   certbot certonly \
     --standalone \
     -d teityura.com \
-    -d gitlab.teityura.com \
+    -d git.teityura.com \
     -m teityura@gmail.com \
     --keep \
     --agree-tos \

@@ -2,7 +2,7 @@
   --webroot \
   -w /var/www/webroot \
   -d teityura.com \
-  -d gitlab.teityura.com \
+  -d git.teityura.com \
   -m teityura@gmail.com \
   --force-renew \
   --agree-tos \
