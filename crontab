@@ -3,6 +3,7 @@
   -w /var/www/webroot \
   -d teityura.com \
   -d git.teityura.com \
+  -d wiki.teityura.com \
   -m teityura@gmail.com \
   --force-renew \
   --agree-tos \
