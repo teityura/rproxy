@@ -7,6 +7,8 @@ services:
     volumes:
       - ./entrypoint.d/98-create-cert.sh:/docker-entrypoint.d/98-create-cert.sh:ro
       - ./entrypoint.d/99-start.crond.sh:/docker-entrypoint.d/99-start.crond.sh:ro
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./stream.d:/etc/nginx/stream.d:ro
       - ./conf.d:/etc/nginx/conf.d:ro
       - ./crontab:/etc/crontabs/root:ro
       - letsencrypt:/etc/letsencrypt:rw
@@ -15,6 +17,7 @@ services:
     ports:
       - 80:80
       - 443:443
+      - 2222:2222
     extra_hosts:
       - host.docker.internal:host-gateway
 
