@@ -13,6 +13,7 @@ if [ ! -e "$CERTFILE" ]; then
     --standalone \
     -d teityura.com \
     -d git.teityura.com \
+    -d wiki.teityura.com \
     -m teityura@gmail.com \
     --keep \
     --agree-tos \
