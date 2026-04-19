@@ -15,6 +15,7 @@ if [ ! -e "$CERTFILE" ]; then
     -d git.teityura.com \
     -d s3.teityura.com \
     -d wiki.teityura.com \
+    -d gnos.teityura.com \
     -m teityura@gmail.com \
     --keep \
     --agree-tos \
