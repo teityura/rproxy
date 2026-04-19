@@ -2,6 +2,13 @@ services:
   rproxy:
     build: .
     restart: always
+    ports:
+      - 80:80
+      - 443:443
+      - 6780:6780
+      - 2222:2222
+    extra_hosts:
+      - host.docker.internal:host-gateway
     volumes:
       - ./entrypoint.d/98-create-cert.sh:/docker-entrypoint.d/98-create-cert.sh:ro
       - ./entrypoint.d/99-start.crond.sh:/docker-entrypoint.d/99-start.crond.sh:ro
@@ -12,15 +19,14 @@ services:
       - letsencrypt:/etc/letsencrypt:rw
       - webroot:/var/www/webroot:rw
       - log:/var/log:rw
-    ports:
-      - 80:80
-      - 443:443
-      - 6780:6780
-      - 2222:2222
-    extra_hosts:
-      - host.docker.internal:host-gateway
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
 
 volumes:
   letsencrypt:
   webroot:
   log:
+
